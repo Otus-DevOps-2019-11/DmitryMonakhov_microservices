@@ -1,5 +1,5 @@
 ---
-    - hosts: reddit-docker
+    - hosts: reddit_docker
       become: true
 
       vars:

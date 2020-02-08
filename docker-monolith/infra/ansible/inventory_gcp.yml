@@ -9,7 +9,7 @@ scopes:
  - 'https://www.googleapis.com/auth/cloud-platform'
  - 'https://www.googleapis.com/auth/compute.readonly'
 groups:
-  reddit-docker: "'reddit-docker' in name"
+  reddit_docker: "'reddit-docker' in name"
 hostnames:
   # List host by name instead of the default public ip
   - name
