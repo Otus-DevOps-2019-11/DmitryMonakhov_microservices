@@ -1,0 +1,7 @@
+{
+  "project_id": "your project id",
+  "source_image_family": "ubuntu-1604-lts",
+  "machine_type": "g1-small",
+  "ssh_username": "appuser",
+  "tags": "reddit-docker-host"
+}
