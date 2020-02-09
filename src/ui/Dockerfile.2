@@ -1,0 +1,24 @@
+FROM alpine:latest
+RUN apk add --update --no-cache ruby libressl build-base ruby-dev libressl-dev && \
+    gem install bundler -v 1.17.2 && \
+    rm -rf /var/cache/apk/*
+
+ENV APP_HOME /app
+ENV BUNDLE_APP_CONFIG /usr/local/bundle
+ENV BUNDLE_BIN /usr/local/bundle/bin
+ENV PATH /usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV BUNDLE_PATH /usr/local/bundle
+ENV GEM_HOME /usr/local/bundle
+RUN mkdir $APP_HOME
+
+WORKDIR $APP_HOME
+ADD Gemfile* $APP_HOME/
+RUN bundle install
+ADD . $APP_HOME
+
+ENV POST_SERVICE_HOST post
+ENV POST_SERVICE_PORT 5000
+ENV COMMENT_SERVICE_HOST comment
+ENV COMMENT_SERVICE_PORT 9292
+
+CMD ["puma"]
