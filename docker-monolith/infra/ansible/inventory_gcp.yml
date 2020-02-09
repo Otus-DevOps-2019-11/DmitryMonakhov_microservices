@@ -1,0 +1,20 @@
+plugin: gcp_compute
+zones: # populate inventory with instances in these regions
+  - europe-west1-b
+projects:
+  - docker-267016
+service_account_file: ~/.gsutil/docker-267016-546e7c0d76fe.json
+auth_kind: serviceaccount
+scopes:
+ - 'https://www.googleapis.com/auth/cloud-platform'
+ - 'https://www.googleapis.com/auth/compute.readonly'
+groups:
+  reddit_docker: "'reddit-docker' in name"
+hostnames:
+  # List host by name instead of the default public ip
+  - name
+compose:
+  # Set an inventory parameter to use the Public IP address to connect to the host
+  # For Private ip use "networkInterfaces[0].networkIP"
+  ansible_host: networkInterfaces[0].accessConfigs[0].natIP
+  ansible_internal_ip: networkInterfaces[0].networkIP

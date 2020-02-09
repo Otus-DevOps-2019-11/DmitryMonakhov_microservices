@@ -1,0 +1,38 @@
+{
+	"variables":
+		{
+			"project_id": null,
+			"source_image_family": null,
+			"ssh_username": null,
+			"tags": null,
+			"machine_type": "g1-small",
+			"zone": "europe-west1-b",
+			"image_family": "reddit-docker-host",
+			"image_description": "docker host image template for reddit containers",
+			"disk_size": "10",
+			"network": "default"
+		},
+	"builders": [
+		{
+			"type": "googlecompute",
+			"project_id": "{{user `project_id`}}",
+			"image_name": "reddit-docker-host",
+			"source_image_family": "{{user `source_image_family`}}",
+			"image_family": "{{user `image_family`}}",
+			"image_description": "{{user `image_description`}}",
+			"zone": "{{user `zone`}}",
+			"machine_type": "{{user `machine_type`}}",
+			"ssh_username": "{{user `ssh_username`}}",
+			"disk_size": "{{user `disk_size`}}",
+			"disk_type": "{{user `disk_type`}}",
+			"network": "{{user `network`}}",
+			"tags": "{{user `tags`}}"
+		}
+	],
+	"provisioners": [
+		{
+		"type": "ansible",
+		"playbook_file": "{{ pwd }}/ansible/playbooks/reddit-docker-host.yml"
+		}
+	]
+}

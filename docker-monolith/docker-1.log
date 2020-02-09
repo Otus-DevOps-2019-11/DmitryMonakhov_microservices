@@ -1,0 +1,8 @@
+REPOSITORY                       TAG                 IMAGE ID            CREATED              SIZE
+dmitrymonakhov/ubuntu-tmp-file   latest              2ce26f436804        About a minute ago   124MB
+ubuntu                           16.04               96da9143fb18        2 weeks ago          124MB
+hello-world                      latest              fce289e99eb9        13 months ago        1.84kB
+
+Образ Docker – это доступный только для чтения шаблон, который задает настройки контейнера.
+Образ содержит исполняемый код вместе с определениями любых библиотек и зависимостей, которые могут понадобиться для его работы.
+Контейнер Docker представляет собой запущенный (работающий) образ Docker.
