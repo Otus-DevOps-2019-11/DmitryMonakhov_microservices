@@ -15,5 +15,20 @@ services:
 
 volumes:
   ui_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/ui
+      o: bind
   comment_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/comment
+      o: bind
   post_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/post-py
+      o: bind
