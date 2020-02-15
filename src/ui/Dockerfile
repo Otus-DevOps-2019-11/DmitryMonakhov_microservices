@@ -1,18 +1,20 @@
-FROM ruby:2.2-alpine
-
-RUN apk add --update --no-cache build-base
-
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
-
-ADD Gemfile* $APP_HOME/
-RUN bundle install
-ADD . $APP_HOME
+FROM ruby:2.7-alpine3.11
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000
 ENV COMMENT_SERVICE_HOST comment
 ENV COMMENT_SERVICE_PORT 9292
+ENV APP_HOME /app
+
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+COPY Gemfile* $APP_HOME/
+
+RUN apk add --no-cache --virtual .build-deps build-base \
+    && gem install bundler -v "1.17.2" \
+    && bundle install \
+    && apk del .build-deps
+
+COPY . $APP_HOME
 
 CMD ["puma"]
