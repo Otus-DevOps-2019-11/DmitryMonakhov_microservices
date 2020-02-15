@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  ui:
+    volumes:
+      - ui_app:/app
+    command: puma --debug -w 2
+  comment:
+    volumes:
+      - comment_app:/app
+    command: puma --debug -w 2
+  post:
+    volumes:
+      - post_app:/app
+    command: puma --debug -w 2
+
+volumes:
+  ui_app:
+  comment_app:
+  post_app:

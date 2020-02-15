@@ -9,19 +9,25 @@ services:
   ui:
     build: ./ui
     image: ${USERNAME}/ui:${VERSION_UI}
+    depends_on:
+      - post_db
     ports:
-      - ${PORT_INT}:${PORT_EXT}/tcp
+      - ${PORT_EXT}:${PORT_INT}/tcp
     networks:
       - front_net
   post:
     build: ./post-py
     image: ${USERNAME}/post:${VERSION_POST}
+    depends_on:
+      - post_db
     networks:
       - back_net
       - front_net
   comment:
     build: ./comment
     image: ${USERNAME}/comment:${VERSION_COMMENT}
+    depends_on:
+      - post_db
     networks:
       - back_net
       - front_net
