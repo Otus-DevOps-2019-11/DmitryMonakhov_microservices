@@ -1,0 +1,34 @@
+version: '3.3'
+services:
+  ui:
+    volumes:
+      - ui_app:/app
+    command: puma --debug -w 2
+  comment:
+    volumes:
+      - comment_app:/app
+    command: puma --debug -w 2
+  post:
+    volumes:
+      - post_app:/app
+    command: puma --debug -w 2
+
+volumes:
+  ui_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/ui
+      o: bind
+  comment_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/comment
+      o: bind
+  post_app:
+    driver: local
+    driver_opts:
+      type: none
+      device: $PWD/post-py
+      o: bind
