@@ -1,6 +1,35 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
-# homework#17 docker-4
+## homework#19 gitlab-ci-1
+### Устройство Gitlab CI. Построение процесса непрерывной поставки
+Развертывание сервера `Gitlab CI` в инфраструктуре GCP произведено с использованием `docker-machine`
+```sh
+docker-machine create --driver google \
+    --google-project docker-267016 \
+    --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts \
+    --google-machine-type n1-standard-1 \
+    --google-disk-size "100" \
+    --google-zone us-east1-b \
+    docker-host
+```
+и файла `docker-compose.yml` https://docs.gitlab.com/omnibus/docker/README.html#install-gitlab-using-docker-compose
+
+Определен `CI/CD Pipeline` для проекта в файле `.gitlab-ci.yml`
+На сервере Gilab CI создан и зарегистирован `Runner`:
+```sh
+$ docker run -d --name gitlab-runner --restart always \
+-v /srv/gitlab-runner/config:/etc/gitlab-runner \
+-v /var/run/docker.sock:/var/run/docker.sock \
+gitlab/gitlab-runner:latest
+$ docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
+```
+Созданы стадии (`stages`) тестирования приложения reddit
+
+Определены `job` для окружений `dev`, `staging`, `production`. Использована директива `when: manual` для ручного запуска `job`. С помощью директивы `only: ` установлено ограничение для запуска `job` только в случае наличие тэга в коммите
+
+При использовании переменных, доступных в `.gitlab-ci.yml`, возможно определение динамического окружения, например, для каждой создаваемой ветки
+
+## homework#17 docker-4
 ### Сетевое взаимодействие Docker контейнеров. Docker Compose. Тестирование образов
 Рассмотрены различные виды сетей Docker: `none`, `host`, `bridge`. Общий случай использования сети `none` - локальное тестирование без сетевого взаимодействия. Для обращения к контейнерам по именам используется опция ` --network-alias` при старте контейнера. Создание Docker-сети осуществляется с помощью `docker network create network_name --subnet=network_ip`. Один контейнер может быть подключен к нескольким сетям: `docker network connect <network> <container>`.
 
