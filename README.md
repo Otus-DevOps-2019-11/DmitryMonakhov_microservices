@@ -1,5 +1,69 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#20 monitoring-1
+### Введение в мониторинг. Системы мониторинга
+Создание правил firewall для Prometheus и Puma:
+```
+gcloud compute firewall-rules create prometheus-default --allow tcp:9090
+gcloud compute firewall-rules create puma-default --allow tcp:9292
+```
+Создание `docker-host` в GCE, с использованием `docker-machine`:
+```
+docker-machine create --driver google \
+--google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts \
+--google-machine-type n1-standard-1 \
+--google-zone europe-west1-b \
+docker-host
+```
+Создание окружения для работы с `Docker`:
+```
+eval $(docker-machine env docker-host)
+```
+Запуск Prometheus:
+```
+docker run --rm -p 9090:9090 -d --name prometheus prom/prometheus:v2.1.0
+```
+Получение информации о версии `Prometheus` с помощью веб-интерфейса `<external_ip_docker_machine>:9090` и выбора метрики `prometheus_build_info`
+
+Сборка образа `Prometheus` с помощью Docker файла в директории `monitoring/prometheus`:
+```
+docker build -t $USER_NAME/prometheus .
+```
+Конфигурирование параметров мониторинга производится в файле `monitoring/prometheus/prometheus.yml`
+
+Сборка образов сервисов выполняется из корня репозитория:
+```
+for i in ui post-py comment; do cd src/$i; bash docker_build.sh; cd -; done
+```
+Для мониторинга приложений, которые не поддерживают метрики, используются экспортеры. Мониторинг docker-host c помощью `node-exporter` осуществляется указанием в файле `docker/docker-compose.yml`:
+```
+services:
+...
+  prometheus:
+    image: ${USERNAME}/prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=1d'
+
+volumes:
+  prometheus_data:
+```
+В веб-интерфейсе `Prometheus` отображается сервис `node`
+
+Загрузка созданных образов в `Docker hub`:
+```
+docker push $USERNAME/ui
+docker push $USERNAME/comment
+docker push $USERNAME/post
+docker push $USERNAME/prometheus
+```
+Образы загружены в docker-hub: https://hub.docker.com/u/dmitrymonakhov
+
 ## homework#19 gitlab-ci-1
 ### Устройство Gitlab CI. Построение процесса непрерывной поставки
 Развертывание сервера `Gitlab CI` в инфраструктуре GCP произведено с использованием `docker-machine`
