@@ -1,6 +1,6 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
-## homework#22 monitoring-2
+## homework#21 monitoring-2
 ### Мониторинг приложения и инфраструктуры
 ##### Подготовка окружения:
 ```sh
