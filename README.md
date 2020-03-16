@@ -1,5 +1,113 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#21 monitoring-2
+### Мониторинг приложения и инфраструктуры
+##### Подготовка окружения:
+```sh
+$ export GOOGLE_PROJECT=_ваш-проект_
+$ docker-machine create --driver google \
+--google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-oscloud/global/images/family/ubuntu-1604-lts \
+--google-machine-type n1-standard-1 \
+--google-zone europe-west1-b \
+docker-host
+$ eval $(docker-machine env docker-host)
+```
+Запуск приложений reddit производится с помощью:  `docker-compose up -d`
+Запуск приложений мониторинга производится с помощью: `docker-compose -f docker-compose-monitoring.yml up -d`
+##### Мониторинг Docker контейнеров
+cAdvisor:  используется для мониторинга состояния Docker контейнеров. Web UI `http://<docker-machinehost-ip>:8080`
+Добавить сервис в `dockercompose-monitoring.yml`:
+```
+  cadvisor:
+    image: google/cadvisor:v0.29.0
+    container_name: cadvisor
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'
+    networks:
+      - back_net
+      - front_net
+```
+Добавить в `prometheus.yml`:
+```
+- job_name: 'cadvisor'
+    static_configs:
+      - targets:
+        - 'cadvisor:8080'
+```
+##### Визуализация метрик
+Grafana: используется для визуализации данных из Prometheus. Web UI `http://<dockermachine-host-ip>:3000`
+Добавить сервис в `dockercompose-monitoring.yml`:
+```
+grafana:
+  grafana:
+    image: grafana/grafana:5.0.0
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    networks:
+      - back_net
+      - front_net
+volumes:
+grafana_data:
+```
+##### Alertmanager
+Функционал alerting в Grafana уступает по функционалу Alertmanager в Prometheus. Для использования Alertmanager добавить в `monitoring/alertmanager/Dockerfile`:
+```
+FROM prom/alertmanager:v0.14.0
+ADD config.yml /etc/alertmanager/
+```
+Добавить сервис в `dockercompose-monitoring.yml`:
+```
+  alertmanager:
+    image: ${USER_NAME}/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+    ports:
+      - 9093:9093
+    networks:
+      - back_net
+      - front_net
+```
+Правила, при которых срабатывает Alertmanager - Alert rules: добавить в `monitoring/alertmanager/Dockerfile`:
+```
+ADD alerts.yml /etc/prometheus/
+```
+Правила описываются в `monitoring/alertmanager/alerts.yml`:
+```
+groups:
+  - name: alert.rules
+    rules:
+    - alert: InstanceDown
+      expr: up == 0
+      for: 1m
+      labels:
+        severity: page
+      annotations:
+        description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute'
+        summary: 'Instance {{ $labels.instance }} down'
+```
+Для получения алертов из Alertmanager в Slack используется [Incoming Webhook](https://devops-team-otus.slack.com/apps/A0F7XDUAZ-incoming-webhooks?next_id=737777317219&direction=forwards)
+
+Запушить образы на DockerHub:
+```sh
+$ docker push $USER_NAME/ui
+$ docker push $USER_NAME/comment
+$ docker push $USER_NAME/post
+$ docker push $USER_NAME/prometheus
+$ docker push $USER_NAME/alertmanager
+```
+[https://hub.docker.com/u/dmitrymonakhov](https://hub.docker.com/u/dmitrymonakhov)
 ## homework#20 monitoring-1
 ### Введение в мониторинг. Системы мониторинга
 Создание правил firewall для Prometheus и Puma:
