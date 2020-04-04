@@ -2,18 +2,18 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: ui-deployment
+  name: comment-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ui
+      app: comment
   template:
     metadata:
-      name: ui
+      name: comment
       labels:
-        app: ui
+        app: comment
     spec:
       containers:
-      - image: dmitrymonakhov/ui
-        name: ui
+      - image: chromko/comment
+        name: comment

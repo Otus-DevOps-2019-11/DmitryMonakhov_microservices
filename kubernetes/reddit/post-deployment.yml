@@ -15,5 +15,5 @@ spec:
         app: post
     spec:
       containers:
-      - image: dmitrymonakhov/post
+      - image: chromko/post
         name: post

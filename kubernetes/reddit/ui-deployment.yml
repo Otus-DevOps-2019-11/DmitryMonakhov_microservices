@@ -15,5 +15,5 @@ spec:
         app: ui
     spec:
       containers:
-      - image: dmitrymonakhov/ui
+      - image: chromko/ui
         name: ui
