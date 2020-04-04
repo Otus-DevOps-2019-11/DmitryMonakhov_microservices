@@ -15,5 +15,5 @@ spec:
         app: comment
     spec:
       containers:
-      - image: chromko/comment
+      - image: dmitrymonakhov/comment
         name: comment

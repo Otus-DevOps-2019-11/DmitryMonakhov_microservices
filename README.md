@@ -1,5 +1,33 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#25 kubernetes-1
+### Введение в Kubernetes
+Выполнена установка основных компонентов Kubernetes кластера в соответствии с `Kubernetes The Hard Way`
+
+Выпонена проверка запуска подов:
+```
+kubectl apply -f ui-deployment.yml
+kubectl apply -f post-deployment.yml
+kubectl apply -f mongo-deployment.yml
+kubectl apply -f comment-deployment.yml
+```
+## homework#23 logging-1
+### Логирование и распредераспределенная трассировка
+Выполнено обновление кода приложения `reddit`
+
+Собраны новые образы `ui`, `post`, `commit`. Образы запушены в Docker Hub
+
+Собран образ `fluentd` для сбора лог сообщений и пересылки их в контейнер с Elasticsearch
+
+Создан отдельный compose-файл `docker-compose-logging.yml`
+
+Для логирования сервисов в `docker-compose.yml` определен драйвер `fluentd`
+
+Для визуализации и анализа собираемых логов использована `Kibana`
+
+Для парсинга логов созданы фильтры, grok-патерны и регулярные выражения
+
+Для распределенного логирования добавлен сервис Zipkin
 ## homework#21 monitoring-2
 ### Мониторинг приложения и инфраструктуры
 ##### Подготовка окружения:
