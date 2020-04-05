@@ -1,5 +1,5 @@
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ui
@@ -20,7 +20,7 @@ spec:
         component: ui
     spec:
       containers:
-      - image: chromko/ui
+      - image: dmitrymonakhov/ui
         name: ui
         env:
         - name: ENV
