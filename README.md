@@ -17,7 +17,6 @@ DmitryMonakhov microservices repository
 Создан кластер в Google Kubernetes Engine из двух нод, добавлено правило фаервола для диапазона tсp портов 30000-32767
 
 В кластере Google Kubernetes Engine создан namespace `dev`, выполнено развертывание созданных ресурсов
-
 ## homework#25 kubernetes-1
 ### Введение в Kubernetes
 Выполнена установка основных компонентов Kubernetes кластера в соответствии с `Kubernetes The Hard Way`
