@@ -13,8 +13,19 @@ services:
   ui:
     image: ${USERNAME}/ui:${VERSION_UI}
     container_name: ui
+    environment:
+      - POST_SERVICE_HOST=post
+      - POST_SERVICE_PORT=5000
+      - COMMENT_SERVICE_HOST=comment
+      - COMMENT_SERVICE_PORT=9292
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     depends_on:
       - post_db
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.ui
     ports:
       - ${PORT_EXT}:${PORT_INT}/tcp
     networks:
@@ -22,19 +33,34 @@ services:
   post:
     image: ${USERNAME}/post:${VERSION_POST}
     container_name: post
+    environment:
+      - POST_DATABASE_HOST=post_db
+      - POST_DATABASE=posts
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     depends_on:
       - post_db
+    ports:
+      - "5000:5000"
     networks:
       - back_net
       - front_net
   comment:
     image: ${USERNAME}/comment:${VERSION_COMMENT}
     container_name: comment
+    environment:
+      - COMMENT_DATABASE_HOST=post_db
+      - COMMENT_DATABASE=comments
+      - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     depends_on:
       - post_db
     networks:
       - back_net
       - front_net
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: service.post
 
 volumes:
   post_db:
