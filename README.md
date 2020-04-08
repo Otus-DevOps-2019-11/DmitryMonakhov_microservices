@@ -1,5 +1,16 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#25 kubernetes-1
+### Введение в Kubernetes
+Выполнена установка основных компонентов Kubernetes кластера в соответствии с `Kubernetes The Hard Way`
+
+Выпонена проверка запуска подов:
+```
+kubectl apply -f ui-deployment.yml
+kubectl apply -f post-deployment.yml
+kubectl apply -f mongo-deployment.yml
+kubectl apply -f comment-deployment.yml
+```
 ## homework#23 logging-1
 ### Логирование и распредераспределенная трассировка
 Выполнено обновление кода приложения `reddit`
@@ -17,7 +28,6 @@ DmitryMonakhov microservices repository
 Для парсинга логов созданы фильтры, grok-патерны и регулярные выражения
 
 Для распределенного логирования добавлен сервис Zipkin
-
 ## homework#21 monitoring-2
 ### Мониторинг приложения и инфраструктуры
 ##### Подготовка окружения:
