@@ -2,7 +2,7 @@
 DmitryMonakhov microservices repository
 ## homework#27 kubernetes-3
 ### Kubernetes. Networks, Storages
-Расссмотрено взаимодействие микросервисов при помощи `kube-dns`
+Рассмотрено взаимодействие микросервисов при помощи плагина `kube-dns`
 
 Рассмотрен вариант внешнего доступа к кластеру при помощи `LoadBalancer`
 
