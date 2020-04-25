@@ -1,5 +1,22 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#26 kubernetes-2
+### Kubernetes. Запуск кластера и приложения. Модель безопасности
+Установлен `minikube` и `kubectl`, с помощью `minikude` развернут локальный кластер
+
+Созданы ресурсы `Deployment` для приложений `ui`, `comment`, `post` и базы данных `mongodb`
+
+Созданы ресурсы `Service` для приложений `comment`, `post` и базы данных `mongodb`
+
+Для обеспечения доступа использован тип `NodePort` сервиса `ui`
+
+Выполнен запуск веб-интерфейса кластера `minikube dashboard`
+
+Создан namespace `dev`, развернуты созданные ресурсы
+
+Создан кластер в Google Kubernetes Engine из двух нод, добавлено правило фаервола для диапазона tсp портов 30000-32767
+
+В кластере Google Kubernetes Engine создан namespace `dev`, выполнено развертывание созданных ресурсов
 ## homework#25 kubernetes-1
 ### Введение в Kubernetes
 Выполнена установка основных компонентов Kubernetes кластера в соответствии с `Kubernetes The Hard Way`
