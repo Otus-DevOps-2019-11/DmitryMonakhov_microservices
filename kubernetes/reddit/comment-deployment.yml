@@ -20,7 +20,7 @@ spec:
         component: comment
     spec:
       containers:
-      - image: dmitrymonakhov/comment:latest
+      - image: dmitrymonakhov/comment
         name: comment
         env:
         - name: COMMENT_DATABASE_HOST
