@@ -1,5 +1,23 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#27 kubernetes-3
+### Kubernetes. Networks, Storages
+Рассмотрено взаимодействие микросервисов при помощи плагина `kube-dns`
+
+Рассмотрен вариант внешнего доступа к кластеру при помощи `LoadBalancer`
+
+Рассмотрен вариант внешнего доступа к кластеру при помощи `Ingress Controller`
+
+Произведена настройка TLS и прием Ingress'ом только https-трафика
+
+Рассмотрен `NetworkPolicy` - инструмент для декларативного описания потоков трафика
+
+Рассмотрен механизм `PersistentVolume`
+
+Рассмотрен механизм создания запроса на выдачу `PersistentVolumeClaim`
+
+Рассмотрен механизм создания хранилища с помощью `StorageClass`
+
 ## homework#26 kubernetes-2
 ### Kubernetes. Запуск кластера и приложения. Модель безопасности
 Установлен `minikube` и `kubectl`, с помощью `minikude` развернут локальный кластер
