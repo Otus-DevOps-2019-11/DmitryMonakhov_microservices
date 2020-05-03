@@ -1,0 +1,8 @@
+apiVersion: v1
+appVersion: "1"
+description: OTUS reddit.application POST
+maintainers:
+- email: my@mail.com
+  name: Someone
+name: post
+version: 1.0.0
