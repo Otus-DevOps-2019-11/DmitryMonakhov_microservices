@@ -1,5 +1,13 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#28 kubernetes-4
+### CI/CD в Kubernetes
+Установка пакетного менеджера `Helm`
+
+Работа с Chart'ами, Template'ами. Управление зависимостями
+
+Развертывание Gitlab в Kubernetes. Настройка CI
+
 ## homework#27 kubernetes-3
 ### Kubernetes. Networks, Storages
 Рассмотрено взаимодействие микросервисов при помощи плагина `kube-dns`
