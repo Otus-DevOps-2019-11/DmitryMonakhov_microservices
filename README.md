@@ -1,5 +1,12 @@
 # DmitryMonakhov_microservices
 DmitryMonakhov microservices repository
+## homework#29 kubernetes-5
+### Kubernetes. Мониторинг и логирование
+Выполнено развертывание Prometheus в Kubernetes
+
+Настройка Prometheus и Grafana для сбора метрик кластера и приложений
+
+
 ## homework#28 kubernetes-4
 ### CI/CD в Kubernetes
 Установка пакетного менеджера `Helm`
